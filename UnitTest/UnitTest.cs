@@ -1,6 +1,6 @@
-using BilibiliLiveRecordDownLoader.FlvProcessor.Clients;
-using BilibiliLiveRecordDownLoader.Http.Clients;
-using BilibiliLiveRecordDownLoader.Shared.Utils;
+using LiveRecordDownLoader.FlvProcessor.Clients;
+using LiveRecordDownLoader.Http.Clients;
+using LiveRecordDownLoader.Shared.Utils;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAPICodePack.Shell;

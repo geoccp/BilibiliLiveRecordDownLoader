@@ -1,5 +1,5 @@
-using BilibiliApi.Enums;
-using BilibiliApi.Utils;
+using Api.Enums;
+using Api.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Text;

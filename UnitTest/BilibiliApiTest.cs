@@ -1,5 +1,5 @@
-using BilibiliApi.Clients;
-using BilibiliLiveRecordDownLoader.Shared.Utils;
+using Api.Clients;
+using LiveRecordDownLoader.Shared.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
