@@ -1,0 +1,73 @@
+<dialogs:DisposableContentDialog
+    x:Class="BilibiliLiveRecordDownLoader.Views.Dialogs.RoomDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogs="clr-namespace:BilibiliLiveRecordDownLoader.Views.Dialogs"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:models="clr-namespace:BilibiliLiveRecordDownLoader.Models"
+    xmlns:constants="clr-namespace:BilibiliLiveRecordDownLoader.Utils"
+    mc:Ignorable="d"
+    d:DesignHeight="800"
+    d:DesignWidth="600"
+    PrimaryButtonText="确定"
+    CloseButtonText="取消"
+    DefaultButton="Primary"
+    d:DataContext="{d:DesignInstance models:RoomStatus}">
+    <ScrollViewer Padding="0,0,20,0">
+        <ui:SimpleStackPanel Spacing="10">
+            <ui:ToggleSwitch
+                Header="录制"
+                OnContent="启用"
+                OffContent="禁用"
+                IsOn="{Binding Path=IsEnable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <ui:ToggleSwitch
+                Header="开播提醒"
+                OnContent="启用"
+                OffContent="禁用"
+                IsOn="{Binding Path=IsNotify,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <ui:NumberBox x:Name="RoomIdNumberBox"
+                          Header="房间号"
+                          Minimum="0"
+                          Maximum="9223372036854775807"
+                          Value="{Binding Path=RoomId,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <ui:NumberBox Header="弹幕重连间隔(秒)"
+                          Minimum="0.0"
+                          Value="{Binding Path=DanMuReconnectLatency,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <ui:NumberBox Header="开播检查间隔(秒)"
+                          Minimum="0.0"
+                          Value="{Binding Path=HttpCheckLatency,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <ui:NumberBox Header="直播重连间隔(秒)"
+                          Minimum="0.0"
+                          Value="{Binding Path=StreamReconnectLatency,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <ui:NumberBox Header="直播连接超时(秒)"
+                          Minimum="0.0"
+                          Value="{Binding Path=StreamConnectTimeout,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <ui:NumberBox Header="直播流超时(秒)"
+                          Minimum="0.0"
+                          Value="{Binding Path=StreamTimeout,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <ComboBox ui:ControlHelper.Header="画质"
+                      ui:ControlHelper.PlaceholderText="原画"
+                      ui:ControlHelper.Description="下次录制生效"
+                      IsEditable="True"
+                      HorizontalAlignment="Stretch"
+                      Text="{Binding Path=Qn,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource QnToStringConverter}}">
+                <ComboBoxItem Content="{x:Static constants:Constants.Qn20000}" />
+                <ComboBoxItem Content="{x:Static constants:Constants.Qn10000}" />
+                <ComboBoxItem Content="{x:Static constants:Constants.Qn401}" />
+                <ComboBoxItem Content="{x:Static constants:Constants.Qn400}" />
+                <ComboBoxItem Content="{x:Static constants:Constants.Qn250}" />
+                <ComboBoxItem Content="{x:Static constants:Constants.Qn150}" />
+                <ComboBoxItem Content="{x:Static constants:Constants.Qn80}" />
+            </ComboBox>
+            <ui:RadioButtons Header="弹幕服务器类型"
+                             MaxColumns="1"
+                             SelectedIndex="{Binding ClientType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DanmuClientTypeToIntConverter}}">
+                <RadioButton Content="TCP" />
+                <RadioButton Content="SecureWebsocket" />
+                <RadioButton Content="Websocket" />
+            </ui:RadioButtons>
+        </ui:SimpleStackPanel>
+    </ScrollViewer>
+</dialogs:DisposableContentDialog>
