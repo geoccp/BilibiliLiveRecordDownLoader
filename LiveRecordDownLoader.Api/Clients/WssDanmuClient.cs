@@ -12,6 +12,7 @@ namespace Api.Clients
 {
 	public class WssDanmuClient : DanmuClientBase
 	{
+		//ws://和wss://前缀分别表示WebSocket连接和安全的WebSocket连接。
 		protected override string Server => $@"wss://{Host}:{Port}/sub";
 		protected override ushort DefaultPort => 443;
 		protected override bool ClientConnected => _client?.State == WebSocketState.Open;

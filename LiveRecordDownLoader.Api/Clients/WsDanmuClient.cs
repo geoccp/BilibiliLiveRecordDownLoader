@@ -5,6 +5,7 @@ namespace Api.Clients
 {
 	public class WsDanmuClient : WssDanmuClient
 	{
+		//ws://和wss://前缀分别表示WebSocket连接和安全的WebSocket连接。
 		protected override string Server => $@"ws://{Host}:{Port}/sub";
 		protected override ushort DefaultPort => 2244;
 

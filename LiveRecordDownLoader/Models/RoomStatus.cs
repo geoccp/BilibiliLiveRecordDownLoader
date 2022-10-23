@@ -46,10 +46,16 @@ namespace LiveRecordDownLoader.Models
 		#region 默认值
 
 		public const bool DefaultIsEnable = true;
+		public const NetServerType DefaultServerType = NetServerType.Bilibili;
+		//弹幕重连间隔
 		public const double DefaultDanMuReconnectLatency = 2.0;
+		//开播检查间隔
 		public const double DefaultHttpCheckLatency = 300.0;
+		//直播重连间隔
 		public const double DefaultStreamReconnectLatency = 6.0;
+		//直播连接超时
 		public const double DefaultStreamConnectTimeout = 3.0;
+		//直播流超时
 		public const double DefaultStreamTimeout = 5.0;
 		public const DanmuClientType DefaultClientType = DanmuClientType.SecureWebsocket;
 		public const Qn DefaultQn = Qn.原画;
@@ -65,6 +71,14 @@ namespace LiveRecordDownLoader.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Reactive]
 		public bool IsEnable { get; set; } = true;
+
+		/// <summary>
+		/// 弹幕服务器类型
+		/// </summary>
+		[DefaultValue(DefaultServerType)]
+		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+		[Reactive]
+		public NetServerType ServerType { get; set; } = DefaultServerType;
 
 		/// <summary>
 		/// 短号
@@ -262,7 +276,7 @@ namespace LiveRecordDownLoader.Models
 				}
 			});
 			this.RaisePropertyChanged(nameof(Title));
-			BuildDanmuClientAsync().Forget();
+			//BuildDanmuClientAsync().Forget();
 			BuildHttpCheckMonitor();
 		}
 
@@ -490,6 +504,7 @@ namespace LiveRecordDownLoader.Models
 			}
 		}
 
+
 		private async ValueTask StatusUpdatedAsync()
 		{
 			try
@@ -601,7 +616,7 @@ namespace LiveRecordDownLoader.Models
 				{
 					await _danmuClient.DisposeAsync();
 				}
-				await BuildDanmuClientAsync();
+				//await BuildDanmuClientAsync();
 			}
 
 			Qn = room.Qn;

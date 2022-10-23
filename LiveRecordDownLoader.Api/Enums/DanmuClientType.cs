@@ -6,4 +6,10 @@ namespace Api.Enums
 		SecureWebsocket = 1,
 		Websocket = 2,
 	}
+
+	public enum NetServerType
+	{
+		Bilibili = 0,
+		Tiktok = 1,
+	}
 }

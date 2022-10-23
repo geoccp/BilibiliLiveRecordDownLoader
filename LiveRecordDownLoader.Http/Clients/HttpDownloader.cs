@@ -50,15 +50,24 @@ namespace LiveRecordDownLoader.Http.Clients
 				await CopyToWithProgressAsync(_netStream, fs, token);
 			}
 		}
-
+		/// <summary>
+		/// 根据token，读取对应的字节流，并写入对应文件
+		/// </summary>
+		/// <param name="from"></param>
+		/// <param name="to"></param>
+		/// <param name="token"></param>
+		/// <param name="bufferSize"></param>
+		/// <returns></returns>
 		private async Task CopyToWithProgressAsync(Stream from, Stream to, CancellationToken token, int bufferSize = 81920)
 		{
 			using var memory = MemoryPool<byte>.Shared.Rent(bufferSize);
 			while (true)
 			{
+				//从当前流中异步读取一系列字节，将流中的位置提前读取的字节数，并监视取消请求。
 				var length = await from.ReadAsync(memory.Memory, token);
 				if (length != 0)
 				{
+					//异步地将字节序列写入当前流，将此流中的当前位置提前写入的字节数，并监视取消请求。
 					await to.WriteAsync(memory.Memory.Slice(0, length), token);
 					ReportProgress(length);
 				}

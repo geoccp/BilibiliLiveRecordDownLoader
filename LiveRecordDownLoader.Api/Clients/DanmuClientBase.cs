@@ -27,8 +27,11 @@ namespace Api.Clients
 		public long RoomId { get; set; }
 
 		public TimeSpan RetryInterval { get; set; } = TimeSpan.FromSeconds(2);
-
+		//Subject 表示既是可观察序列又是观察者的对象。
+		//每个通知都会广播给所有订阅的观察员。
 		private readonly Subject<DanmuPacket> _danMuSubj = new();
+		//_danMuSubj.AsObservable() 隐藏源序列身份的可观察序列。
+		//这里=>的用法相当于 { get; } = 即：将Sex字段设置为了只读属性，同时进行了赋值。
 		public IObservable<DanmuPacket> Received => _danMuSubj.AsObservable();
 
 		private readonly BilibiliApiClient _apiClient;
@@ -153,6 +156,11 @@ namespace Api.Clients
 			}
 		}
 
+		/// <summary>
+		/// 判断是否显示进房间弹幕
+		/// </summary>
+		/// <param name="packet"></param>
+		/// <returns></returns>
 		private bool IsAuthSuccess(in DanmuPacket packet)
 		{
 			try
@@ -213,7 +221,11 @@ namespace Api.Clients
 				break;
 			}
 		}
-
+		/// <summary>
+		///  IDuplexPipe 定义一个类，该类提供可从中读取和写入数据的双工管道。
+		/// </summary>
+		/// <param name="token"></param>
+		/// <returns></returns>
 		private async ValueTask<IDuplexPipe?> ConnectAsync(CancellationToken token)
 		{
 			try
@@ -227,9 +239,9 @@ namespace Api.Clients
 				await SendAuthAsync(writer, token);
 
 				_heartBeatTask = Observable.Interval(HeartBeatInterval)
-#pragma warning disable VSTHRD101
+					#pragma warning disable VSTHRD101
 					.Subscribe(async _ => await SendHeartbeatAsync(writer, token));
-#pragma warning restore VSTHRD101
+				#pragma warning restore VSTHRD101
 
 				_disposableServices.Add(_heartBeatTask);
 
@@ -380,6 +392,10 @@ namespace Api.Clients
 			}
 		}
 
+		/// <summary>
+		/// x
+		/// </summary>
+		/// <param name="packet"></param>
 		private void EmitDanmu(in DanmuPacket packet)
 		{
 #if DEBUG

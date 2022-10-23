@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 namespace LiveRecordDownLoader.ViewModels
 {
+	//sealed 修饰符可以应用于类、实例方法和属性。密封类不能被继承
 	public sealed class MainWindowViewModel : ReactiveObject, IScreen
 	{
 		#region Command
